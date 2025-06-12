@@ -1,0 +1,23 @@
+async function connectWallet() {
+  if (window.ethereum) {
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      document.getElementById('walletAddress').innerText = `Connected: ${accounts[0]}`;
+    } catch (err) {
+      alert('Connection failed!');
+    }
+  } else {
+    alert('Install MetaMask first!');
+  }
+}
+
+function submitFeedback() {
+  const feedback = document.getElementById('feedback').value;
+  if (!feedback) {
+    document.getElementById('status').innerText = 'Please enter feedback.';
+    return;
+  }
+  localStorage.setItem('feedback-' + Date.now(), feedback);
+  document.getElementById('status').innerText = '✅ Feedback submitted (stored locally)';
+  document.getElementById('feedback').value = '';
+}
